@@ -3,7 +3,7 @@ name: 系统检查与 Docker 拉取
 on: push
 
 jobs:
-    jobs1:
+    check-system:
         runs-on: ubuntu-latest
         steps:
         - name: 查看内核信息
