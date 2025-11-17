@@ -1,33 +1,31 @@
 name: 系统检查与 Docker 拉取
 
-on:
-    push:
-    workflow_dispatch:
+on: push
 
 jobs:
-    check-system:
+    jobs1:
         runs-on: ubuntu-latest
         steps:
-            - name: 查看内核信息
-                run: uname -a
-            - name: 查看发行版信息
-                run: |
-                    cat /etc/os-release || true
-                    lsb_release -a || true
+        - name: 查看内核信息
+          run: uname -a
+        - name: 查看发行版信息
+          run: |
+            cat /etc/os-release || true
+            lsb_release -a || true
 
     pull-docker:
         runs-on: ubuntu-latest
         steps:
-            - name: 检查 Docker 可用性
-                run: |
-                    if ! command -v docker >/dev/null 2>&1; then
-                        sudo apt-get update
-                        sudo apt-get install -y docker.io
-                    fi
-                    docker --version
-            - name: 拉取镜像
-                run: |
-                    IMAGE=alpine:latest
-                    docker pull $IMAGE
-                    echo "已拉取的镜像："
-                    docker images | head -n 20
+        - name: 检查 Docker 可用性
+          run: |
+            if ! command -v docker >/dev/null 2>&1; then
+            sudo apt-get update
+            sudo apt-get install -y docker.io
+            fi
+            docker --version
+        - name: 拉取镜像
+          run: |
+            IMAGE=alpine:latest
+            docker pull $IMAGE
+            echo "已拉取的镜像："
+            docker images | head -n 20
